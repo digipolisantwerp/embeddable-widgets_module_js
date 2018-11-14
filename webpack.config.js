@@ -47,6 +47,10 @@ const config = {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
     extensions: ['.json', '.js'],
   },
+  performance: {
+    maxEntrypointSize: 400000,
+    maxAssetSize: 400000,
+  },
 };
 
 module.exports = config;

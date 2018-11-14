@@ -27,6 +27,11 @@
   ],
 
   "rules": {
-    "prefer-destructuring": 0
+    "prefer-destructuring": 0,
+    "import/no-extraneous-dependencies": [
+      "error", {
+        "devDependencies": true
+      }
+    ]
   }
 }

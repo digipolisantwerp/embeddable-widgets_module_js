@@ -1,9 +1,6 @@
 /* global describe, it, before */
-
 import chai from 'chai';
-import * as widgets from '../lib/widgets.js';
-
-chai.expect();
+import widgets from '../lib/widgets';
 
 const expect = chai.expect;
 
