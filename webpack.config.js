@@ -5,17 +5,17 @@ const path = require('path');
 const env = require('yargs').argv.env; // use --env with webpack 2
 const pkg = require('./package.json');
 
-const libraryName = pkg.name;
+const libraryName = "auiEmbeddedWidgets";
 
 let outputFile;
 let mode;
 
 if (env === 'build') {
   mode = 'production';
-  outputFile = 'widgets.min.js';
+  outputFile = 'aui-embedded-widgets.min.js';
 } else {
   mode = 'development';
-  outputFile = 'widgets.js';
+  outputFile = 'aui-embedded-widgets.js';
 }
 
 const config = {

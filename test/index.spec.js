@@ -1,19 +1,21 @@
-/* global describe, it, before */
+// @ts-nocheck
 import chai from 'chai';
-import widgets from '../lib/widgets';
+import * as widgets from '../lib/aui-embedded-widgets';
 
 const expect = chai.expect;
 
-let lib;
-
-/*describe('Given an instance of my Something library', () => {
-  before(() => {
-    lib = new widgets.Something();
-  });
-  describe('when I need the name', () => {
-    it('should return the name', () => {
-      expect(lib.name).to.be.equal('Something');
+describe('aui-embedded-widgets', () => {
+  it('defines and renders', () => {
+    const definition = widgets.define('MyTestWidget', {
+      tag: 'my-test-widget',
+      url: 'http://example.com',
+      defaultLogLevel: 'error',
     });
+    expect(definition).to.be.an('object');
+    const elem = document.createElement('div');
+    expect(elem.innerHTML).not.to.include('<iframe');
+    const widget = widgets.render('MyTestWidget', {}, elem);
+    expect(elem.innerHTML).to.include('<iframe');
+    expect(widget).to.be.an('object');
   });
 });
-*/

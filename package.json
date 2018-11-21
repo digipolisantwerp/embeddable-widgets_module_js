@@ -1,8 +1,8 @@
 {
-  "name": "embedded-widgets",
+  "name": "aui-embedded-widgets",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/widgets.min.js",
+  "main": "lib/aui-embedded-widgets.min.js",
   "scripts": {
     "start": "nodemon index.js",
     "build": "webpack --env dev && webpack --env build && npm run test",
