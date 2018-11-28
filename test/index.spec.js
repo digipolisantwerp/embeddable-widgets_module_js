@@ -16,7 +16,7 @@ describe('aui-embedded-widgets', () => {
     const tag = randomTag('my-test-widget1');
     const definition = widgets.define({
       tag,
-      url: 'http://example.com',
+      url: 'http://example.com/',
       defaultLogLevel: 'error',
     });
     expect(definition).to.be.an('object');
@@ -46,7 +46,7 @@ describe('aui-embedded-widgets', () => {
       const tag = randomTag('my-test-widget2');
       const fixture = {
         tag,
-        url: 'http://example.com',
+        url: 'http://example.com/',
         defaultLogLevel: 'error',
       };
       widgets

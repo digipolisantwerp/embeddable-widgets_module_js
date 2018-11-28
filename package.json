@@ -12,10 +12,12 @@
   },
   "author": "",
   "license": "MIT",
+  "browserslist": "> 0.25%, not dead",
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
     "@babel/plugin-transform-object-assign": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "babel-eslint": "^8.0.3",
@@ -35,9 +37,11 @@
     "nodemon": "^1.18.7",
     "sinon": "^7.1.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
+    "url-polyfill": "^1.1.2",
     "webpack": "^4.12.2",
     "webpack-cli": "^3.0.8",
     "yargs": "^10.0.3",
+    "zalgo-promise": "^1.0.34",
     "zoid": "^6.0.67"
   }
 }

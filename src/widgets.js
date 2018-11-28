@@ -1,10 +1,19 @@
-import { Promise } from 'es6-promise';
+// zoid uses ZalgoPromise, we need to polyfill Promise anyway so just reuse it
+// @ts-ignore
+import { ZalgoPromise as Promise } from 'zalgo-promise';
 import zoid from 'zoid/dist/zoid.frame';
+// polyfill URL because @babel/polyfill did not contain it yet
+import 'url-polyfill';
 
-// registered widgets
+// registered widgets, indexed by tag
 const widgets = {};
-// maps url to promise or widget
+// maps url to promise of widget definition
 const fetchedUrls = {};
+
+// defaults applied to widget definitions
+const widgetDefaults = {
+  defaultLogLevel: 'warn',
+};
 
 function xhrGet(url) {
   return new Promise((resolve, reject) => {
@@ -23,10 +32,23 @@ function xhrGet(url) {
   });
 }
 
+function isAbsoluteUrl(url) {
+  return /^http(s)?:\/\//i.test(url);
+}
+
+/**
+ * Returns whether a widget for the given tag is defined.
+ * @param {string} tag The widget's tag
+ */
 function isDefined(tag) {
   return !!widgets[tag];
 }
 
+/**
+ * Defines a widget from the given definition (typically loaded from JSON).
+ * Use this only if you know what you're doing.
+ * @param {object} definition The widget's definition
+ */
 function define(definition) {
   if (!definition.tag) {
     throw new Error('unable to define a widget without a tag');
@@ -36,8 +58,7 @@ function define(definition) {
     // zoid does not support defining a component with the same tag multiple times
     throw new Error(`"${tag}" was defined previously`);
   } else {
-    // TODO: apply sane defaults (defaultLogLevel, tag, prerenderTemplate, ...)
-    widgets[tag] = zoid.create(definition);
+    widgets[tag] = zoid.create(Object.assign(widgetDefaults, definition));
     return widgets[tag];
   }
 }
@@ -45,8 +66,8 @@ function define(definition) {
 /**
  * Load a widget definition from a url
  * @param {string} url The URL hosting the widget's JSON
- * @param {object} overrides Overrides to apply to the JSON prior to defining the widget
- * @param {boolean} force Force loading even if already loaded.
+ * @param {object=} overrides Overrides to apply to the JSON prior to defining the widget
+ * @param {boolean=} force Force loading even if already loaded.
  *                        Use only if you know what you're doing.
  */
 function load(url, overrides, force) {
@@ -55,8 +76,12 @@ function load(url, overrides, force) {
   if (!loaded || force) {
     // start loading and cache the promise
     fetchedUrls[url] = xhrGet(url).then((response) => {
-      // TODO: normalize URL
       const options = Object.assign(JSON.parse(response), overrides, { originalUrl: url });
+      if (!options.url) throw new Error('required url property not set in widget JSON');
+      // convert relative URL's to absolute
+      if (!isAbsoluteUrl(options.url)) {
+        options.url = new URL(options.url, isAbsoluteUrl(url) ? url : window.location.href).href;
+      }
       const definition = define(options);
       fetchedUrls[url] = definition;
       return definition;
@@ -65,8 +90,29 @@ function load(url, overrides, force) {
   return fetchedUrls[url];
 }
 
-function render(identifier, options, elem) {
-  return widgets[identifier].render(options, elem);
+/**
+ * Render a widget that was previously loaded
+ * @param {string} tag The tag identifying the widget.
+ * @param {object} props The props to render the widget with
+ * @param {HTMLElement} elem The element to render the widget to
+ */
+function render(tag, props, elem) {
+  if (!widgets[tag]) {
+    throw new Error(`unable to render, widget "${tag}" is not loaded yet`);
+  }
+  return widgets[tag].render(props, elem);
+}
+
+/**
+ * Render the widget hosted at a specific URL, loading it if needed
+ * @param {string} url The URL hosting the widget's JSON
+ * @param {object} props The props to render the widget with
+ * @param {HTMLElement} elem The element to render the widget to
+ * @param {object=} overrides The overrides to apply to the loaded JSON.
+ *                      Loading occurs only once, so these are applied once per page.
+ */
+function renderUrl(url, props, elem, overrides) {
+  return load(url, overrides).then(widget => widget.render(props, elem));
 }
 
 export {
@@ -74,4 +120,5 @@ export {
   isDefined,
   load,
   render,
+  renderUrl,
 };
