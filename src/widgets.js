@@ -92,15 +92,19 @@ function load(url, overrides, force) {
 
 /**
  * Render a widget that was previously loaded
- * @param {string} tag The tag identifying the widget.
+ * @param {string|object} tag A handle to the widget component, or the widget's tag.
  * @param {object} props The props to render the widget with
  * @param {HTMLElement} elem The element to render the widget to
  */
 function render(tag, props, elem) {
-  if (!widgets[tag]) {
+  if (!tag || (!tag.render && !widgets[tag])) {
     throw new Error(`unable to render, widget "${tag}" is not loaded yet`);
   }
-  return widgets[tag].render(props, elem);
+  const component = tag.render ? tag : widgets[tag];
+  if (props.dimensions) {
+    Object.assign(component.dimensions, props.dimensions);
+  }
+  return component.render(props, elem);
 }
 
 /**
@@ -112,7 +116,7 @@ function render(tag, props, elem) {
  *                      Loading occurs only once, so these are applied once per page.
  */
 function renderUrl(url, props, elem, overrides) {
-  return load(url, overrides).then(widget => widget.render(props, elem));
+  return load(url, overrides).then(widget => render(widget, props, elem));
 }
 
 export {
