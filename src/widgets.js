@@ -4,6 +4,7 @@ import { ZalgoPromise as Promise } from 'zalgo-promise';
 import zoid from 'zoid/dist/zoid.frame';
 // polyfill URL because @babel/polyfill did not contain it yet
 import 'url-polyfill';
+import reactComponent from './reactComponent';
 
 // registered widgets, indexed by tag
 const widgets = {};
@@ -125,4 +126,5 @@ export {
   load,
   render,
   renderUrl,
+  reactComponent,
 };
