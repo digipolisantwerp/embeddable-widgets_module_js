@@ -70,8 +70,10 @@ function define(definition) {
  * @param {object=} overrides Overrides to apply to the JSON prior to defining the widget
  * @param {boolean=} force Force loading even if already loaded.
  *                        Use only if you know what you're doing.
+ * @return Promise<object> Will return the widget definition object when loaded
  */
 function load(url, overrides, force) {
+  if (!url) return Promise.reject(new Error('must specify a url to load'));
   const loaded = fetchedUrls[url];
   // don't load if already loading or loaded, unless forced
   if (!loaded || force) {

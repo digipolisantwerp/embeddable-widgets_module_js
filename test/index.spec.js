@@ -24,6 +24,7 @@ describe('aui-embedded-widgets', () => {
       },
     });
     expect(definition).to.be.an('object');
+    expect(widgets.isDefined(tag)).to.equal(true);
     const elem = document.createElement('div');
     expect(elem.innerHTML).not.to.include('<iframe');
     // override just the height from the definition (width will not be overridden)
@@ -33,6 +34,16 @@ describe('aui-embedded-widgets', () => {
       /\.zoid-outlet \{[\s]*width: 500px;[\s]*height: 100%;/gm,
     );
     expect(widget).to.be.an('object');
+  });
+
+  it('needs a tag to define', () => {
+    expect(() => widgets.define({
+      url: 'http://example.com/',
+    })).to.throw();
+  });
+
+  it('only renders defined widgets', () => {
+    expect(() => widgets.render('no-such-widget')).to.throw();
   });
 
   describe('load', () => {
@@ -48,6 +59,29 @@ describe('aui-embedded-widgets', () => {
     });
     afterEach(() => {
       xhrMock.restore();
+    });
+
+    it('needs a URL', (done) => {
+      widgets.load().catch((err) => {
+        expect(err).to.be.an('error');
+        done();
+      });
+    });
+
+    it('needs a URL in the definition', (done) => {
+      const tag = randomTag('my-broken-widget');
+      const fixture = {
+        tag,
+      };
+      widgets
+        .load('http://example.com/widget.json', null, true) // force loading
+        .catch((err) => {
+          expect(err).to.be.an('error');
+          done();
+        });
+      // respond to xhr to kickstart .then handler
+      expect(requests.length).to.equal(1);
+      requests[0].respond(200, { 'Content-Type': 'application/json' }, JSON.stringify(fixture));
     });
 
     it('loads and renders', (done) => {
