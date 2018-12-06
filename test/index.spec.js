@@ -18,12 +18,20 @@ describe('aui-embedded-widgets', () => {
       tag,
       url: 'http://example.com/',
       defaultLogLevel: 'error',
+      dimensions: {
+        width: '500px',
+        height: '500px',
+      },
     });
     expect(definition).to.be.an('object');
     const elem = document.createElement('div');
     expect(elem.innerHTML).not.to.include('<iframe');
-    const widget = widgets.render(tag, {}, elem);
+    // override just the height from the definition (width will not be overridden)
+    const widget = widgets.render(tag, { dimensions: { height: '100%' } }, elem);
     expect(elem.innerHTML).to.include('<iframe');
+    expect(elem.innerHTML).to.match(
+      /\.zoid-outlet \{[\s]*width: 500px;[\s]*height: 100%;/gm,
+    );
     expect(widget).to.be.an('object');
   });
 
@@ -87,5 +95,27 @@ describe('aui-embedded-widgets', () => {
       expect(requests.length).to.equal(1);
       requests[0].respond(200, { 'Content-Type': 'application/json' }, JSON.stringify(fixture));
     });
+
+    it('transforms a relative URL', (done) => {
+      const tag = randomTag('my-test-widget3');
+      const fixture = {
+        tag,
+        url: '../widget/',
+        defaultLogLevel: 'error',
+      };
+      widgets
+        .load('http://example.com/definition/my-test-widget3.json', null, true) // force loading
+        .then((definition) => {
+          expect(definition).to.be.an('object');
+          expect(definition.tag).to.equal(tag);
+          expect(definition.url).to.equal('http://example.com/widget/');
+          done();
+        })
+        .catch(err => done(err));
+      // respond to xhr to kickstart .then handler
+      expect(requests.length).to.equal(1);
+      requests[0].respond(200, { 'Content-Type': 'application/json' }, JSON.stringify(fixture));
+    });
+
   });
 });

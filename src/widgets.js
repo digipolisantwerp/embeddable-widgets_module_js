@@ -102,7 +102,7 @@ function render(tag, props, elem) {
     throw new Error(`unable to render, widget "${tag}" is not loaded yet`);
   }
   const component = tag.render ? tag : widgets[tag];
-  if (props.dimensions) {
+  if (props && props.dimensions) {
     Object.assign(component.dimensions, props.dimensions);
   }
   return component.render(props, elem);
@@ -115,9 +115,11 @@ function render(tag, props, elem) {
  * @param {HTMLElement} elem The element to render the widget to
  * @param {object=} overrides The overrides to apply to the loaded JSON.
  *                      Loading occurs only once, so these are applied once per page.
+ * @param {boolean=} force Force loading even if already loaded.
+ *                      Use only if you know what you're doing.
  */
-function renderUrl(url, props, elem, overrides) {
-  return load(url, overrides).then(widget => render(widget, props, elem));
+function renderUrl(url, props, elem, overrides, force) {
+  return load(url, overrides, force).then(widget => render(widget, props, elem));
 }
 
 export {

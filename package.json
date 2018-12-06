@@ -9,7 +9,7 @@
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha ./test/*.spec.js",
     "test:watch": "mocha -w ./test/*.spec.js",
-    "test:coverage": "cross-env NODE_ENV=test nyc --reporter lcov --reporter text mocha ./test/*.spec.js"
+    "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js"
   },
   "author": "",
   "license": "MIT",
@@ -20,6 +20,7 @@
     "include": [
       "src/**/*.js"
     ],
+    "reporter": ["lcov", "text"],
     "all": true
   },
   "devDependencies": {
