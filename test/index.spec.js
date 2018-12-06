@@ -1,7 +1,7 @@
 // @ts-nocheck
 import chai from 'chai';
 import sinon from 'sinon';
-import * as widgets from '../lib/aui-embedded-widgets';
+import * as widgets from '../src/widgets';
 
 require('mocha-sinon');
 

@@ -8,11 +8,20 @@
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha ./test/*.spec.js",
-    "test:watch": "mocha -w ./test/*.spec.js"
+    "test:watch": "mocha -w ./test/*.spec.js",
+    "test:coverage": "cross-env NODE_ENV=test nyc --reporter lcov --reporter text mocha ./test/*.spec.js"
   },
   "author": "",
   "license": "MIT",
   "browserslist": "> 0.25%, not dead",
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false,
+    "include": [
+      "src/**/*.js"
+    ],
+    "all": true
+  },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
@@ -23,7 +32,9 @@
     "babel-eslint": "^8.0.3",
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "^5.1.0",
     "chai": "^4.1.2",
+    "cross-env": "^5.2.0",
     "es6-promise": "^4.2.5",
     "eslint": "^5.0.1",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -35,6 +46,7 @@
     "mocha": "^4.0.1",
     "mocha-sinon": "^2.1.0",
     "nodemon": "^1.18.7",
+    "nyc": "^13.1.0",
     "sinon": "^7.1.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-polyfill": "^1.1.2",
