@@ -7,4 +7,4 @@ const port = 3000;
 
 app.use('/', express.static('lib'));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Framework app listening on port ${port}!`));

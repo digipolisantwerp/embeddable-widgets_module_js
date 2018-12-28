@@ -1,8 +1,8 @@
 {
-  "name": "aui-embedded-widgets",
+  "name": "aui-embeddable-widgets",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/aui-embedded-widgets.min.js",
+  "main": "lib/aui-embeddable-widgets.min.js",
   "scripts": {
     "start": "nodemon index.js",
     "build": "webpack --env dev && webpack --env build && npm run test",
@@ -20,7 +20,10 @@
     "include": [
       "src/**/*.js"
     ],
-    "reporter": ["lcov", "text"],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
     "all": true
   },
   "devDependencies": {

@@ -11,7 +11,7 @@ function randomTag(prefix) {
   return prefix + Math.random().toString(36).substring(7);
 }
 
-describe('aui-embedded-widgets', () => {
+describe('aui-embeddable-widgets', () => {
   it('defines and renders', () => {
     const tag = randomTag('my-test-widget1');
     const definition = widgets.define({
@@ -150,6 +150,5 @@ describe('aui-embedded-widgets', () => {
       expect(requests.length).to.equal(1);
       requests[0].respond(200, { 'Content-Type': 'application/json' }, JSON.stringify(fixture));
     });
-
   });
 });
