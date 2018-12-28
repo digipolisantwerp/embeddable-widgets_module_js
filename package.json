@@ -1,8 +1,8 @@
 {
-  "name": "aui-embeddable-widgets",
+  "name": "@acpaas-ui/embeddable-widgets",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/aui-embeddable-widgets.min.js",
+  "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
     "start": "nodemon index.js",
     "build": "webpack --env dev && webpack --env build && npm run test",
