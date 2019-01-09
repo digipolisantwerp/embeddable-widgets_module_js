@@ -46,6 +46,22 @@ describe('aui-embeddable-widgets', () => {
     expect(() => widgets.render('no-such-widget')).to.throw();
   });
 
+  it('transforms props defaultValue', () => {
+    const tag = randomTag('my-test-widget4');
+    const definition = widgets.define({
+      tag,
+      url: 'http://example.com/',
+      props: {
+        test: {
+          type: 'string',
+          defaultValue: 'foo',
+        },
+      },
+    });
+    expect(definition.props.test.def).to.be.a('function');
+    expect(definition.props.test.def()).to.equal('foo');
+  });
+
   describe('load', () => {
     let requests = [];
     let xhrMock = null;
