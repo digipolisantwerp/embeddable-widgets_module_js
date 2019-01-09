@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 // zoid uses ZalgoPromise, we need to polyfill Promise anyway so just reuse it
 // @ts-ignore
 import { ZalgoPromise as Promise } from 'zalgo-promise';
@@ -59,7 +60,21 @@ function define(definition) {
     // zoid does not support defining a component with the same tag multiple times
     throw new Error(`"${tag}" was defined previously`);
   } else {
-    widgets[tag] = zoid.create(Object.assign(widgetDefaults, definition));
+    const options = Object.assign(widgetDefaults, definition);
+    // convert from JSON to zoid syntax
+    if (options.props) {
+      // @ts-ignore
+      Object.values(options.props).forEach((prop) => {
+        if (prop.defaultValue) {
+          if (typeof prop.defaultValue === 'function') {
+            prop.def = prop.defaultValue;
+          } else {
+            prop.def = () => prop.defaultValue;
+          }
+        }
+      });
+    }
+    widgets[tag] = zoid.create(options);
     return widgets[tag];
   }
 }
