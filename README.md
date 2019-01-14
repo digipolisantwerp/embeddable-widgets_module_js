@@ -408,6 +408,12 @@ The wrapper is necessary to allow for a different developer experience which is 
 - [ ] Auth token relaying (security topics in general)
 - [ ] Upgrade to latest zoid release
 
+## License
+
+[MIT](./LICENSE.md)
+
+Copyright (c) 2019-present, Digipolis
+
 <!-- external links -->
 
 [ngx-embeddable-widgets]: https://github.com/digipolisantwerp/embeddable-widgets_component_angular
