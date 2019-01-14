@@ -26,13 +26,47 @@ You can publish any webpage as an embeddable widget.
 
 First you need to publish the definition of the widget on a web-accessible URL as JSON.
 
-TODO
+```json
+{
+  "tag": "my-foo-widget",
+  "url": "/foo-widget",
+  "dimensions": {
+    "width": "100%",
+    "height": "500px"
+  },
+  "props": {
+    "fooData": {
+      "type": "array",
+      "required": true
+    },
+    "onFoo": {
+      "type": "function",
+      "required": false
+    }
+  }
+}
+```
 
-> It is not required that the definition is hosted on the same server as the widget.
+What is going on here:
+
+- The `tag` is a unique identifier for the widget in the page (it is not automatically mapped to a HTML tag).
+- The `url` points to where the widget's page is hosted. It can be relative (to the JSON's URL) or absolute.
+
+  > It is not required that the definition is hosted on the same server as the widget.
+
+- The `dimensions` specify the initial rendering dimensions, applies as style attributes to the iframe.
+- The `props` specify the properties that the widget can be initialized with
+  - `fooData` is an array which will be passed from container to widget
+  - `onFoo` is an event handler which will be defined in the container and called by the widget
+
+See the [API](#API) section below for more details.
+
+> CORS headers need to be set on this JSON (e.g. `Access-Control-Allow-Origin: *`).
+> CORS headers do not need to be set on the widget page itself.
 
 #### Angular
 
-To publish an Angular 6+ app, use the Angular wrapper [ngx-embeddable-widgets].
+To publish an Angular 6+ app, use the Angular wrapper [ngx-embeddable-widgets]. It includes an example app.
 
 #### Other Frameworks
 
@@ -72,8 +106,6 @@ import ReactDOM from 'react-dom';
 const MyWidget = window.auiEmbeddedWidgets.reactComponent(
   // url to the definition
   "//example.com/path/to/defintion.json",
-  // overrides for the definition
-  null,
   { React, ReactDOM }
 )
 
@@ -105,7 +137,7 @@ Render the widget into the div, passing it the necessary properties:
 ```js
 window.auiEmbeddableWidgets.renderUrl(
   '//example.com/path/to/definition.json',
-  { fooData: ['one', 'two'], 
+  { fooData: ['one', 'two'],
     onFoo: function(result) { ... } },
   document.getElementById('my-container')
 );
@@ -113,7 +145,212 @@ window.auiEmbeddableWidgets.renderUrl(
 
 ## API
 
-TODO
+### `window.auiEmbeddableWidgets`
+
+- `define(definition: object): object`
+
+  Defines a widget from the specified definition (same as the JSON described above) and returns a handle to widget for instantiating.
+
+  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times.
+
+- `isDefined(tag: string): boolean`
+
+  Returns true if the widget is already defined in the page.
+
+- `load(url: string, ?overrides: object): Promise<object>`
+
+  Loads a widget definition from a URL, applies the optional overrides to it, then returns a handle to the widget for instantiating.
+
+- `render(tag: string|object, props: object, elem: HTMLElement): object`
+
+  Renders a previously defined widget with the specified props parameters into the specified element and returns a handle to the instance.
+  `tag` can be the widget instance returned from the load operation, or its tag string.
+
+- `renderUrl(url: string, props: object, elem: HTMLElement, ?overrides: object): Promise<object>`
+
+  Loads a widget definition from URL (if not yet loaded), applies the optional overrides to it,
+  then renders it to the specified element with the given props parameters.
+  Returns a promise for the rendered instance.
+
+- `reactComponent(url: string, deps: object, ?overrides: object): object`
+
+  Creates a React component for the widget with definition hosted at `url`, with the optional overrides applied to that definition.
+  The deps object must contain the `React` and `ReactDOM` objects provided by React.
+
+### Definition attributes
+
+The possible attributes for the widget definition:
+
+#### tag `string` [required]
+
+A tag-name for the component, used for:
+
+- Loading the correct component in the child window or frame
+- Generating framework drivers
+- Logging
+
+```javascript
+tag: 'my-component-tag'
+```
+
+#### url `string` [required]
+
+The URL that will be loaded when the widget is rendered. Can be relative to the JSON's URL or absolute.
+
+```javascript
+url: 'https://example.com/foo-widget'
+```
+
+```javascript
+url: '/foo-widget'
+```
+
+#### dimensions `{ width : string, height : string }`
+
+The initial dimensions for the widget, in css-style units, with support for `px` or `%`.
+
+```javascript
+dimensions: {
+    width: '300px',
+    height: '200px'
+}
+```
+
+```javascript
+dimensions: {
+    width: '80%',
+    height: '90%'
+}
+```
+
+#### props `Object<string, Object>`
+
+Props that can be passed to the widget when rendering (data or functions).
+
+```javascript
+props: {
+
+    onLogin: {
+        type: 'function'
+    },
+
+    prefilledEmail: {
+        type: 'string',
+        required: false
+    }
+}
+```
+
+##### Prop Options
+
+- **type** `string`
+
+  The data-type expected for the prop
+
+  - `'string'`
+  - `'number'`
+  - `'boolean'`
+  - `'object'`
+  - `'function'`
+  - `'array'`
+
+- **required** `boolean`
+
+  Whether or not the prop is mandatory. Defaults to `true`.
+
+  ```javascript
+  onLogin: {
+      type: 'function',
+      required: false
+  }
+  ```
+
+- **defaultValue**
+
+  The default value for the prop if not passed at render time. `required` must be false.
+
+  ```javascript
+  fooData: {
+      type: "array",
+      required: false,
+      defaultValue: ["one", "two"]
+  }
+  ```
+
+- **queryParam** `boolean | string`
+
+  Should a prop be passed in the url (so it can influence the routing)?
+
+  ```javascript
+  email: {
+      type: 'string',
+      queryParam: true // ?email=foo@bar.com
+  }
+  ```
+
+  If a string is set, this specifies the url param name which will be used.
+
+  ```javascript
+  email: {
+      type: 'string',
+      queryParam: 'user-email' // ?user-email=foo@bar.com
+  }
+  ```
+
+- **serialization** `string`
+
+  If `json`, the prop will be JSON stringified before being inserted into the url
+
+  ```javascript
+  user: {
+      type: 'object',
+      serialization: 'json' // ?user={"name":"Zippy","age":34}
+  }
+  ```
+
+  If `dotify` the prop will be converted to dot-notation.
+
+  ```javascript
+  user: {
+      type: 'object',
+      serialization: 'dotify' // ?user.name=Zippy&user.age=34
+  }
+  ```
+
+  If `base64`, the prop will be JSON stringified then base64 encoded before being inserted into the url
+
+  ```javascript
+  user: {
+      type: 'object',
+      serialization: 'base64' // ?user=eyJuYW1lIjoiWmlwcHkiLCJhZ2UiOjM0fQ==
+  }
+  ```
+
+#### autoResize `{ height: boolean, width: boolean, element: string }`
+
+Makes the container's iframe resize automatically when the child widget window size changes.
+
+```javascript
+autoResize: {
+    width: false,
+    height: true,
+}
+```
+
+Note that by default it matches the `body` element of your content.
+You can override this setting by specifying a custom selector as an `element` property.
+
+```javascript
+autoResize: {
+    width: false,
+    height: true,
+    element: '.my-selector',
+}
+```
+
+Recommended to only use autoResize for height. Width has some strange effects, especially when scroll bars are present.
+
+> Check the [Zoid API documentation][zoid-api] for additional properties. The function-based properties can only be specified as overrides, not in the JSON.
 
 ## Developing
 
@@ -158,3 +395,4 @@ The wrapper is necessary to allow for a different developer experience which is 
 
 [ngx-embeddable-widgets]: https://github.com/digipolisantwerp/embeddable-widgets_component_angular
 [zoid]: https://github.com/krakenjs/zoid
+[zoid-api]: https://raw.githubusercontent.com/krakenjs/zoid/master/docs/api.md

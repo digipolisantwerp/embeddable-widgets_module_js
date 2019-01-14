@@ -1,6 +1,6 @@
 import { load } from './widgets';
 
-const reactComponent = (widgetUrl, overrides, deps) => class extends deps.React.Component {
+const reactComponent = (widgetUrl, deps, overrides) => class extends deps.React.Component {
   constructor(props) {
     super(props);
     this.state = {
