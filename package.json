@@ -1,7 +1,7 @@
 {
   "name": "@acpaas-ui/embeddable-widgets",
   "version": "1.0.0",
-  "description": "",
+  "description": "Library for embedding parts of apps into other apps",
   "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -11,7 +11,7 @@
     "test:watch": "mocha -w ./test/*.spec.js",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js"
   },
-  "author": "",
+  "author": "Digipolis",
   "license": "MIT",
   "browserslist": "> 0.25%, not dead",
   "nyc": {
