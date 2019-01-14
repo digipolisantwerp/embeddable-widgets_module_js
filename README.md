@@ -103,7 +103,7 @@ To embed into an Angular 6+ app, use the Angular wrapper [ngx-embeddable-widgets
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const MyWidget = window.auiEmbeddedWidgets.reactComponent(
+const MyWidget = window.auiEmbeddableWidgets.reactComponent(
   // url to the definition
   "//example.com/path/to/defintion.json",
   { React, ReactDOM }
