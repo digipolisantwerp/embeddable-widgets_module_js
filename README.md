@@ -350,7 +350,24 @@ autoResize: {
 
 Recommended to only use autoResize for height. Width has some strange effects, especially when scroll bars are present.
 
-> Check the [Zoid API documentation][zoid-api] for additional properties. The function-based properties can only be specified as overrides, not in the JSON.
+#### defaultLogLevel `string`
+
+The default logging level for the widget's internals, helpful for debugging. Options are:
+
+- `'debug'`
+- `'info'`
+- `'warn'` (default)
+- `'error'`
+
+```javascript
+defaultLogLevel: 'info'
+```
+
+> Note that this value can be overriden by passing `logLevel` as a prop when rendering the component.
+
+#### Additional properties
+
+Check the [Zoid API documentation][zoid-api] for additional properties. The function-based properties can only be specified as overrides, not in the JSON.
 
 ## Developing
 
@@ -395,4 +412,4 @@ The wrapper is necessary to allow for a different developer experience which is 
 
 [ngx-embeddable-widgets]: https://github.com/digipolisantwerp/embeddable-widgets_component_angular
 [zoid]: https://github.com/krakenjs/zoid
-[zoid-api]: https://raw.githubusercontent.com/krakenjs/zoid/master/docs/api.md
+[zoid-api]: https://github.com/krakenjs/zoid/blob/zoid-v6/docs/api.md
