@@ -15,6 +15,15 @@ const fetchedUrls = {};
 // defaults applied to widget definitions
 const widgetDefaults = {
   defaultLogLevel: 'warn',
+  props: {
+    // pass ?_aui_api_version=1 in the widget's URL to allow breaking API changes
+    _aui_api_version: {
+      type: 'string',
+      required: false,
+      defaultValue: '1',
+      queryParam: true,
+    },
+  },
 };
 
 function xhrGet(url) {
@@ -60,7 +69,8 @@ function define(definition) {
     // zoid does not support defining a component with the same tag multiple times
     throw new Error(`"${tag}" was defined previously`);
   } else {
-    const options = Object.assign(widgetDefaults, definition);
+    const options = Object.assign({}, widgetDefaults, definition);
+    Object.assign(options.props, widgetDefaults.props, definition.props);
     // convert from JSON to zoid syntax
     if (options.props) {
       // @ts-ignore

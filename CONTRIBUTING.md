@@ -60,3 +60,16 @@ If possible, do provide meaningful and clean commit messages. A [good commit mes
 ### Publishing
 
 > Only the ACPaaS UI team publishes new releases. [Contact us](https://acpaas-ui.digipolis.be/contact) if you need a new release published.
+
+### Breaking API changes
+
+Both container and widget must have compatible releases of the embeddable widgets library. This means that **breaking changes should be avoided**.
+In case of unavoidable breaking API changes we have a chicken and egg problem since we would need to update widget and container at the same time.
+To prepare for this, a special property `_aui_api_version` is passed in the URL of the widget.
+
+To deploy a breaking change:
+
+1. Develop a new release of this library with _aui_api_version=N+1 (see `src/widgets.js`)
+2. In all widgets, loads the new release of this library only if `?_aui_api_version=N+1` and keep loading the old release otherwise.
+3. Upgrade all containers to the new release.
+4. Remove the old release from the widgets.

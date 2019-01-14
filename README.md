@@ -406,7 +406,7 @@ The wrapper is necessary to allow for a different developer experience which is 
 
 - [ ] Support max-width / max-height when autoResize is enabled
 - [ ] Auth token relaying (security topics in general)
-- [ ] Relay version from parent to child
+- [ ] Upgrade to latest zoid release
 
 <!-- external links -->
 
