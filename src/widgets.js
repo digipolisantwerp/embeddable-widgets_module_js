@@ -44,7 +44,7 @@ function xhrGet(url) {
 }
 
 function isAbsoluteUrl(url) {
-  return /^(http(s)?)?:\/\//i.test(url);
+  return /^(http(s)?:)?\/\//i.test(url);
 }
 
 /**

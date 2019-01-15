@@ -8,7 +8,7 @@ Widgets can declare API's that are available in the container's page, even if co
 
 ## Changelog
 
-- 1.0.1 - Fix URL starting with "//" is not recognized as absolute
+- 1.0.2 - Fix URL starting with "//" is not recognized as absolute
 - 1.0.0 - Initial release
 
 ## Using
