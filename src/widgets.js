@@ -108,7 +108,11 @@ function load(url, overrides, force) {
       if (!options.url) throw new Error('required url property not set in widget JSON');
       // convert relative URL's to absolute
       if (!isAbsoluteUrl(options.url)) {
-        options.url = new URL(options.url, isAbsoluteUrl(url) ? url : window.location.href).href;
+        let baseUrl = isAbsoluteUrl(url) ? url : window.location.href;
+        if (baseUrl.substr(0, 2) === '//') {
+          baseUrl = (window.location.protocol || 'https:') + baseUrl;
+        }
+        options.url = new URL(options.url, baseUrl).href;
       }
       const definition = define(options);
       fetchedUrls[url] = definition;
