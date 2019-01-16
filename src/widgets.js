@@ -6,6 +6,7 @@ import zoid from 'zoid/dist/zoid.frame';
 // polyfill URL because @babel/polyfill did not contain it yet
 import 'url-polyfill';
 import reactComponent from './reactComponent';
+import { defaultPrerenderTemplate } from './templates';
 
 // registered widgets, indexed by tag
 const widgets = {};
@@ -15,6 +16,8 @@ const fetchedUrls = {};
 // defaults applied to widget definitions
 const widgetDefaults = {
   defaultLogLevel: 'warn',
+  // show the ACPaaS UI spinner
+  prerenderTemplate: defaultPrerenderTemplate,
   props: {
     // pass ?_aui_api_version=1 in the widget's URL to allow breaking API changes
     _aui_api_version: {
