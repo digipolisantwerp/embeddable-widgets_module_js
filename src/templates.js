@@ -13,27 +13,14 @@ function defaultPrerenderTemplate(options) {
               <style>
                   {`
                       html, body {
-                          width: 100%;
-                          height: 100%;
-                          overflow: hidden;
-                          top: 0;
-                          left: 0;
-                          margin: 0;
-                          text-align: center;
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        height: 100vh;
+                        padding: 0; 
+                        margin: 0;
                       }
 
-                      .spinner {
-                        position: absolute;
-                        max-height: 60vmin;
-                        max-width: 60vmin;
-                        height: 28px;
-                        width: 28px;
-                        top: 50%;
-                        left: 50%;
-                        transform: translateX(-50%) translateY(-50%);
-                        z-index: 10;
-                      }
-                      
                       .a-spinner {
                         color: #b0b0b0;
                       }
@@ -45,6 +32,7 @@ function defaultPrerenderTemplate(options) {
                         font-family: FontAwesome;
                         text-rendering: auto;
                         animation: fa-spin 1200ms infinite linear;
+                        -webkit-animation: fa-spin 1200ms infinite linear;
                         color: inherit;
                         content: '\\f1ce';
                         display: inline-block;
@@ -54,7 +42,7 @@ function defaultPrerenderTemplate(options) {
               </style>
           </head>
           <body>
-              <div class="spinner a-spinner"></div>
+              <div class="a-spinner"></div>
           </body>
       </html>
   );

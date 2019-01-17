@@ -124,11 +124,14 @@ class App extends Component {
       <MyWidget
         fooData={ ['one', 'two'] }
         onFoo={ result => this.onFoo(result) }
+        className="my-widget"
         />
     );
   }
 }
 ```
+
+> This renders a `<div>` with the (optional) `className` applied to it.
 
 #### Other
 
