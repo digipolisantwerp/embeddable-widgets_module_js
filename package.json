@@ -1,6 +1,6 @@
 {
   "name": "@acpaas-ui/embeddable-widgets",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Library for embedding parts of apps into other apps",
   "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "sourceMap": false,
     "instrument": false,
     "include": [
-      "src/**/*.js"
+      "src/**/*.js",
+      "src/**/*.jsx"
     ],
     "reporter": [
       "lcov",
@@ -30,6 +31,7 @@
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
     "@babel/plugin-transform-object-assign": "^7.0.0",
+    "@babel/plugin-transform-react-jsx": "^7.2.0",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
