@@ -6,12 +6,6 @@ An application part that can be embedded is called a widget. The app which publi
 
 Widgets can declare API's that are available in the container's page, even if container and publisher are implemented in different front-end frameworks.
 
-## Changelog
-
-- 1.0.4 - make the loading spinner core branding compatible
-- 1.0.3 - Support protocol-relative URL (//example.com/...)
-- 1.0.0 - Initial release
-
 ## Using
 
 ### Including
