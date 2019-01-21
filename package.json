@@ -9,7 +9,8 @@
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha ./test/*.spec.js",
     "test:watch": "mocha -w ./test/*.spec.js",
-    "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js"
+    "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js",
+    "travis": "node publish.js"
   },
   "author": "Digipolis",
   "license": "MIT",
