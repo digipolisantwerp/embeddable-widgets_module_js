@@ -387,7 +387,7 @@ See the [contribution guide](CONTRIBUTING.md) for additional details.
 
 ## Design notes
 
-This framework makes use of the [Zoid framework][zoid]], which implements the boilerplate for embedding apps into other apps using iframes and the postMessage API.
+This framework makes use of the [Zoid framework][zoid], which implements the boilerplate for embedding apps into other apps using iframes and the postMessage API.
 
 The wrapper is necessary to allow for a different developer experience which is more suited to the needs of Digipolis development projects.
 
