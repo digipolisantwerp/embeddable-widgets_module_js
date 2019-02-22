@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
 
+### Fixed
+- Fixed issue in react when rendering a view with a widget twice.
 
 ## [1.0.4] - 2019-01-21
 
