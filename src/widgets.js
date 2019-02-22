@@ -122,7 +122,7 @@ function load(url, overrides, force) {
       return definition;
     });
   }
-  return fetchedUrls[url];
+  return Promise.resolve(fetchedUrls[url]);
 }
 
 /**
