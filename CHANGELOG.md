@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
 
+## [1.0.5] - 2019-02-22
+
 ### Fixed
 - Fixed issue in react when rendering a view with a widget twice.
 
@@ -25,7 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Initial release.
 
 
-[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.0...v1.0.3
 [1.0.0]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.0
