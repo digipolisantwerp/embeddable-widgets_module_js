@@ -1,6 +1,6 @@
 {
   "name": "@acpaas-ui/embeddable-widgets",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Library for embedding parts of apps into other apps",
   "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
