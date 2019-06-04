@@ -9,7 +9,8 @@
       "@babel/preset-env",
       {
         "useBuiltIns": "usage",
-        "modules": "commonjs"
+        "modules": "commonjs",
+        "corejs": 2
       }
     ]
   ],
