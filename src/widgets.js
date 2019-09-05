@@ -5,7 +5,7 @@ import { ZalgoPromise as Promise } from 'zalgo-promise';
 import zoid from 'zoid/dist/zoid.frame';
 // polyfill URL because @babel/polyfill did not contain it yet
 import 'url-polyfill';
-import reactComponent from './reactComponent';
+import * as base32 from 'hi-base32';
 import { defaultPrerenderTemplate } from './templates';
 
 // registered widgets, indexed by tag
@@ -44,6 +44,21 @@ function xhrGet(url) {
     };
     xhr.send();
   });
+}
+
+// extract the overrides sent from the parent through window.name
+// see render() for where they are sent
+function getParentOverrides() {
+  let meta;
+  if (window.name) {
+    const [zoidcomp, , , encodedOptions] = window.name.split('__');
+    if (zoidcomp === 'xcomponent') {
+      try {
+        meta = JSON.parse(base32.decode(encodedOptions.toUpperCase()));
+      } catch (e) { /* */ }
+    }
+  }
+  return (meta && meta.props && meta.props.value) ? meta.props.value._aui_overrides : undefined;
 }
 
 function isAbsoluteUrl(url) {
@@ -105,9 +120,11 @@ function load(url, overrides, force) {
   const loaded = fetchedUrls[url];
   // don't load if already loading or loaded, unless forced
   if (!loaded || force) {
+    // inherit overrides from parent if they exist
+    const allOverrides = Object.assign({}, getParentOverrides(), overrides);
     // start loading and cache the promise
     fetchedUrls[url] = xhrGet(url).then((response) => {
-      const options = Object.assign(JSON.parse(response), overrides, { originalUrl: url });
+      const options = Object.assign(JSON.parse(response), allOverrides, { originalUrl: url });
       if (!options.url) throw new Error('required url property not set in widget JSON');
       // convert relative URL's to absolute
       if (!isAbsoluteUrl(options.url)) {
@@ -119,6 +136,7 @@ function load(url, overrides, force) {
       }
       const definition = define(options);
       fetchedUrls[url] = definition;
+      definition.overrides = overrides;
       return definition;
     });
   }
@@ -139,7 +157,11 @@ function render(tag, props, elem) {
   if (props && props.dimensions) {
     Object.assign(component.dimensions, props.dimensions);
   }
-  return component.render(props, elem);
+  const extendedProps = Object.assign({
+    // pass overrides from parent to child
+    _aui_overrides: component.overrides,
+  }, props);
+  return component.render(extendedProps, elem);
 }
 
 /**
@@ -162,5 +184,4 @@ export {
   load,
   render,
   renderUrl,
-  reactComponent,
 };

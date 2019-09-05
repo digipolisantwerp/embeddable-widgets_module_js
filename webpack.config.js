@@ -20,7 +20,7 @@ if (env === 'build') {
 
 const config = {
   mode,
-  entry: `${__dirname  }/src/widgets.js`,
+  entry: `${__dirname  }/src/index.js`,
   devtool: 'source-map',
   output: {
     path: `${__dirname  }/lib`,
