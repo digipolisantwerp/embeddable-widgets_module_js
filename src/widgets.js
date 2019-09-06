@@ -13,6 +13,15 @@ const widgets = {};
 // maps url to promise of widget definition
 const fetchedUrls = {};
 
+const scrollTo = (elementOffset, tag) => {
+  const containerElement = document.querySelector(`.zoid-tag-${tag}`);
+  const newTopOffset = containerElement.offsetParent.offsetTop + elementOffset;
+  window.scrollTo({
+    top: newTopOffset,
+    behavior: 'smooth',
+  });
+};
+
 // defaults applied to widget definitions
 const widgetDefaults = {
   defaultLogLevel: 'warn',
@@ -25,6 +34,15 @@ const widgetDefaults = {
       required: false,
       defaultValue: '1',
       queryParam: true,
+    },
+    scrollTo: {
+      type: 'function',
+      required: false,
+      value: (yPos, tag) => scrollTo(yPos, tag),
+    },
+    tag: {
+      type: 'string',
+      required: false,
     },
   },
 };
@@ -55,10 +73,12 @@ function getParentOverrides() {
     if (zoidcomp === 'xcomponent') {
       try {
         meta = JSON.parse(base32.decode(encodedOptions.toUpperCase()));
-      } catch (e) { /* */ }
+      } catch (e) {
+        /* */
+      }
     }
   }
-  return (meta && meta.props && meta.props.value) ? meta.props.value._aui_overrides : undefined;
+  return meta && meta.props && meta.props.value ? meta.props.value._aui_overrides : undefined;
 }
 
 function isAbsoluteUrl(url) {
@@ -92,6 +112,7 @@ function define(definition) {
     // convert from JSON to zoid syntax
     if (options.props) {
       // @ts-ignore
+      options.props.tag.value = tag;
       Object.values(options.props).forEach((prop) => {
         if (prop.defaultValue) {
           if (typeof prop.defaultValue === 'function') {
@@ -157,10 +178,13 @@ function render(tag, props, elem) {
   if (props && props.dimensions) {
     Object.assign(component.dimensions, props.dimensions);
   }
-  const extendedProps = Object.assign({
-    // pass overrides from parent to child
-    _aui_overrides: component.overrides,
-  }, props);
+  const extendedProps = Object.assign(
+    {
+      // pass overrides from parent to child
+      _aui_overrides: component.overrides,
+    },
+    props,
+  );
   return component.render(extendedProps, elem);
 }
 
@@ -179,9 +203,5 @@ function renderUrl(url, props, elem, overrides, force) {
 }
 
 export {
-  define,
-  isDefined,
-  load,
-  render,
-  renderUrl,
+  define, isDefined, load, render, renderUrl,
 };

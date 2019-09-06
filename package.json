@@ -68,5 +68,8 @@
     "yargs": "^10.0.3",
     "zalgo-promise": "^1.0.40",
     "zoid": "^6.0.74"
+  },
+  "dependencies": {
+    "smoothscroll-polyfill": "^0.4.4"
   }
 }
