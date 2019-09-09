@@ -248,7 +248,7 @@ props: {
 
 ###### scrollTo(yPos: Numer, tag: String)
 
-`scrollTo` is a property that is by default passed on to the component. When called from the component it is required to pass the yPosition the tag.
+`scrollTo` is a property that is by default passed on to the component. When called from the component it is required to pass the yPosition and the tag.
 The tag can be found on the `props.tag` property. By default the widget framework will scroll the parent to the position passed.
 
 You can however overwrite the `scrollTo` property to handle the scroll yourself for example to compensate collapsable headers.
