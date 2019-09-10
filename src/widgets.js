@@ -78,7 +78,7 @@ function getParentOverrides() {
       }
     }
   }
-  return meta && meta.props && meta.props.value ? meta.props.value._aui_overrides : undefined;
+  return (meta && meta.props && meta.props.value) ? meta.props.value._aui_overrides : undefined;
 }
 
 function isAbsoluteUrl(url) {
@@ -202,6 +202,4 @@ function renderUrl(url, props, elem, overrides, force) {
   return load(url, overrides, force).then(widget => render(widget, props, elem));
 }
 
-export {
-  define, isDefined, load, render, renderUrl,
-};
+export { define, isDefined, load, render, renderUrl };
