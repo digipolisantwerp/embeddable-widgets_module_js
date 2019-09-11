@@ -2,10 +2,10 @@
 // zoid uses ZalgoPromise, we need to polyfill Promise anyway so just reuse it
 // @ts-ignore
 import { ZalgoPromise as Promise } from 'zalgo-promise';
-import zoid from 'zoid/dist/zoid.frame';
 // polyfill URL because @babel/polyfill did not contain it yet
 import 'url-polyfill';
 import * as base32 from 'hi-base32';
+import { create } from 'zoid/dist/zoid.frame';
 import { defaultPrerenderTemplate } from './templates';
 
 // registered widgets, indexed by tag
@@ -78,7 +78,7 @@ function getParentOverrides() {
       }
     }
   }
-  return (meta && meta.props && meta.props.value) ? meta.props.value._aui_overrides : undefined;
+  return meta && meta.props && meta.props.value ? meta.props.value._aui_overrides : undefined;
 }
 
 function isAbsoluteUrl(url) {
@@ -123,7 +123,7 @@ function define(definition) {
         }
       });
     }
-    widgets[tag] = zoid.create(options);
+    widgets[tag] = create(options);
     return widgets[tag];
   }
 }
@@ -171,10 +171,12 @@ function load(url, overrides, force) {
  * @param {HTMLElement} elem The element to render the widget to
  */
 function render(tag, props, elem) {
-  if (!tag || (!tag.render && !widgets[tag])) {
+  if (!tag || !widgets[tag]) {
     throw new Error(`unable to render, widget "${tag}" is not loaded yet`);
   }
-  const component = tag.render ? tag : widgets[tag];
+
+  const component = typeof tag === 'string' ? widgets[tag](props) : tag(props);
+  debugger;
   if (props && props.dimensions) {
     Object.assign(component.dimensions, props.dimensions);
   }
@@ -185,7 +187,7 @@ function render(tag, props, elem) {
     },
     props,
   );
-  return component.render(extendedProps, elem);
+  return component.render(elem);
 }
 
 /**
@@ -202,4 +204,6 @@ function renderUrl(url, props, elem, overrides, force) {
   return load(url, overrides, force).then(widget => render(widget, props, elem));
 }
 
-export { define, isDefined, load, render, renderUrl };
+export {
+  define, isDefined, load, render, renderUrl,
+};
