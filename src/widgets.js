@@ -6,7 +6,7 @@ import { ZalgoPromise as Promise } from 'zalgo-promise';
 import 'url-polyfill';
 import * as base32 from 'hi-base32';
 import { create } from 'zoid/dist/zoid.frame';
-import { defaultPrerenderTemplate } from './templates';
+import defaultPrerenderTemplate from './templates';
 
 // registered widgets, indexed by tag
 const widgets = {};
@@ -38,7 +38,7 @@ const widgetDefaults = {
     scrollTo: {
       type: 'function',
       required: false,
-      value: (yPos, tag) => scrollTo(yPos, tag),
+      defaultValue: (yPos, tag) => scrollTo(yPos, tag),
     },
     tag: {
       type: 'string',
@@ -112,14 +112,10 @@ function define(definition) {
     // convert from JSON to zoid syntax
     if (options.props) {
       // @ts-ignore
-      options.props.tag.value = tag;
+      options.props.tag.value = () => tag;
       Object.values(options.props).forEach((prop) => {
         if (prop.defaultValue) {
-          if (typeof prop.defaultValue === 'function') {
-            prop.def = prop.defaultValue;
-          } else {
-            prop.def = () => prop.defaultValue;
-          }
+          prop.default = () => prop.defaultValue;
         }
       });
     }
@@ -171,22 +167,21 @@ function load(url, overrides, force) {
  * @param {HTMLElement} elem The element to render the widget to
  */
 function render(tag, props, elem) {
-  if (!tag || !widgets[tag]) {
+  if (!typeof tag === 'function' || (typeof tag === 'string' && !widgets[tag])) {
     throw new Error(`unable to render, widget "${tag}" is not loaded yet`);
   }
 
   const component = typeof tag === 'string' ? widgets[tag](props) : tag(props);
-  debugger;
   if (props && props.dimensions) {
     Object.assign(component.dimensions, props.dimensions);
   }
-  const extendedProps = Object.assign(
-    {
-      // pass overrides from parent to child
-      _aui_overrides: component.overrides,
-    },
-    props,
-  );
+  // const extendedProps = Object.assign(
+  //   {
+  //     // pass overrides from parent to child
+  //     _aui_overrides: component.overrides,
+  //   },
+  //   props,
+  // );
   return component.render(elem);
 }
 

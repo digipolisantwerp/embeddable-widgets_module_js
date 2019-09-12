@@ -1,7 +1,7 @@
 {
   "env": {
     "test": {
-      "plugins": [ "istanbul" ]
+      "plugins": ["istanbul"]
     }
   },
   "presets": [
@@ -15,8 +15,13 @@
     ]
   ],
   "plugins": [
-    "babel-plugin-add-module-exports", 
+    "babel-plugin-add-module-exports",
     "@babel/plugin-transform-object-assign",
-    "@babel/plugin-transform-react-jsx"
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragme": "node"
+      }
+    ]
   ]
 }
