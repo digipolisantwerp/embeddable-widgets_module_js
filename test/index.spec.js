@@ -23,7 +23,7 @@ describe('aui-embeddable-widgets', () => {
         height: '500px',
       },
     });
-    expect(definition).to.be.an('object');
+    expect(definition).to.be.an('function');
     expect(widgets.isDefined(tag)).to.equal(true);
     const elem = document.createElement('div');
     expect(elem.innerHTML).not.to.include('<iframe');
@@ -110,6 +110,7 @@ describe('aui-embeddable-widgets', () => {
       widgets
         .load('http://example.com/widget.json', null, true) // force loading
         .then((definition) => {
+          debugger;
           expect(definition).to.be.an('object');
           expect(definition.tag).to.equal(tag);
           expect(definition.url).to.equal(fixture.url);

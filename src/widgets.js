@@ -6,6 +6,7 @@ import { ZalgoPromise as Promise } from 'zalgo-promise';
 import 'url-polyfill';
 import * as base32 from 'hi-base32';
 import { create } from 'zoid/dist/zoid.frame';
+import { base64decode } from 'belter';
 import defaultPrerenderTemplate from './templates';
 
 // registered widgets, indexed by tag
@@ -72,7 +73,7 @@ function getParentOverrides() {
     const [zoidcomp, , , encodedOptions] = window.name.split('__');
     if (zoidcomp === 'xcomponent') {
       try {
-        meta = JSON.parse(base32.decode(encodedOptions.toUpperCase()));
+        meta = JSON.parse(base64decode(encodedOptions));
       } catch (e) {
         /* */
       }
@@ -153,7 +154,6 @@ function load(url, overrides, force) {
       }
       const definition = define(options);
       fetchedUrls[url] = definition;
-      definition.overrides = overrides;
       return definition;
     });
   }
@@ -168,20 +168,18 @@ function load(url, overrides, force) {
  */
 function render(tag, props, elem) {
   if (!typeof tag === 'function' || (typeof tag === 'string' && !widgets[tag])) {
-    throw new Error(`unable to render, widget "${tag}" is not loaded yet`);
+    throw new Error(`Unable to render, widget "${tag}" is not loaded yet`);
   }
 
-  const component = typeof tag === 'string' ? widgets[tag](props) : tag(props);
-  if (props && props.dimensions) {
-    Object.assign(component.dimensions, props.dimensions);
-  }
   // const extendedProps = Object.assign(
   //   {
   //     // pass overrides from parent to child
-  //     _aui_overrides: component.overrides,
+  //     _aui_overrides: tag.overrides,
   //   },
   //   props,
   // );
+  const component = typeof tag === 'string' ? widgets[tag](props) : tag(props);
+  debugger;
   return component.render(elem);
 }
 

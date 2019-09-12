@@ -44,6 +44,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-istanbul": "^5.1.4",
+    "belter": "^1.0.103",
     "chai": "^4.2.0",
     "core-js": "^2.6.9",
     "cross-env": "^5.2.0",
