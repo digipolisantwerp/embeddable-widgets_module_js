@@ -150,9 +150,14 @@ window.auiEmbeddableWidgets.renderUrl(
 
 ### `window.auiEmbeddableWidgets`
 
-- `define(definition: object): object`
+- `define(definition: object, ?overrides: object): object`
 
-  Defines a widget from the specified definition (same as the JSON described above) and returns a handle to widget for instantiating.
+  Defines a widget from the specified definition (same as the JSON described above) and returns a composed object with everything required to instantiate a component.
+  Object has: 
+
+  - options: the definition with processed default values
+  - overrides: the overrides you passed down
+  - component: a function to pass the properties to and instantiate
 
   > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times.
 

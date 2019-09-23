@@ -4,9 +4,9 @@
 import { ZalgoPromise as Promise } from 'zalgo-promise';
 // polyfill URL because @babel/polyfill did not contain it yet
 import 'url-polyfill';
-import * as base32 from 'hi-base32';
 import { create } from 'zoid/dist/zoid.frame';
 import { base64decode } from 'belter';
+import deepMerge from 'deepmerge';
 import defaultPrerenderTemplate from './templates';
 
 // registered widgets, indexed by tag
@@ -15,7 +15,7 @@ const widgets = {};
 const fetchedUrls = {};
 
 const scrollTo = (elementOffset, tag) => {
-  const containerElement = document.querySelector(`.zoid-tag-${tag}`);
+  const containerElement = document.querySelector(`[id^='zoid-${tag}-']`);
   const newTopOffset = containerElement.offsetParent.offsetTop + elementOffset;
   window.scrollTo({
     top: newTopOffset,
@@ -70,8 +70,8 @@ function xhrGet(url) {
 function getParentOverrides() {
   let meta;
   if (window.name) {
-    const [zoidcomp, , , encodedOptions] = window.name.split('__');
-    if (zoidcomp === 'xcomponent') {
+    const [, zoidcomp, , encodedOptions] = window.name.split('__');
+    if (zoidcomp === 'zoid') {
       try {
         meta = JSON.parse(base64decode(encodedOptions));
       } catch (e) {
@@ -108,19 +108,21 @@ function define(definition) {
     // zoid does not support defining a component with the same tag multiple times
     throw new Error(`"${tag}" was defined previously`);
   } else {
-    const options = Object.assign({}, widgetDefaults, definition);
-    Object.assign(options.props, widgetDefaults.props, definition.props);
+    const componentDefinition = deepMerge(widgetDefaults, definition);
     // convert from JSON to zoid syntax
-    if (options.props) {
+    if (componentDefinition.props) {
       // @ts-ignore
-      options.props.tag.value = () => tag;
-      Object.values(options.props).forEach((prop) => {
+      componentDefinition.props.tag.value = () => tag;
+      Object.values(componentDefinition.props).forEach((prop) => {
         if (prop.defaultValue) {
           prop.default = () => prop.defaultValue;
         }
       });
     }
-    widgets[tag] = create(options);
+    widgets[tag] = {
+      component: create(componentDefinition),
+      componentDefinition,
+    };
     return widgets[tag];
   }
 }
@@ -142,18 +144,21 @@ function load(url, overrides, force) {
     const allOverrides = Object.assign({}, getParentOverrides(), overrides);
     // start loading and cache the promise
     fetchedUrls[url] = xhrGet(url).then((response) => {
-      const options = Object.assign(JSON.parse(response), allOverrides, { originalUrl: url });
-      if (!options.url) throw new Error('required url property not set in widget JSON');
+      const defaultDefinition = Object.assign(JSON.parse(response), allOverrides, {
+        originalUrl: url,
+      });
+      if (!defaultDefinition.url) throw new Error('required url property not set in widget JSON');
       // convert relative URL's to absolute
-      if (!isAbsoluteUrl(options.url)) {
+      if (!isAbsoluteUrl(defaultDefinition.url)) {
         let baseUrl = isAbsoluteUrl(url) ? url : window.location.href;
         if (baseUrl.substr(0, 2) === '//') {
           baseUrl = (window.location.protocol || 'https:') + baseUrl;
         }
-        options.url = new URL(options.url, baseUrl).href;
+        defaultDefinition.url = new URL(defaultDefinition.url, baseUrl).href;
       }
-      const definition = define(options);
+      const definition = define(defaultDefinition);
       fetchedUrls[url] = definition;
+      definition.overrides = overrides;
       return definition;
     });
   }
@@ -170,17 +175,11 @@ function render(tag, props, elem) {
   if (!typeof tag === 'function' || (typeof tag === 'string' && !widgets[tag])) {
     throw new Error(`Unable to render, widget "${tag}" is not loaded yet`);
   }
+  const widget = typeof tag === 'string' ? widgets[tag] : tag;
 
-  // const extendedProps = Object.assign(
-  //   {
-  //     // pass overrides from parent to child
-  //     _aui_overrides: tag.overrides,
-  //   },
-  //   props,
-  // );
-  const component = typeof tag === 'string' ? widgets[tag](props) : tag(props);
-  debugger;
-  return component.render(elem);
+  // pass overrides from parent to child
+  props._aui_overrides = widget.overrides;
+  return widget.component(props).render(elem);
 }
 
 /**
