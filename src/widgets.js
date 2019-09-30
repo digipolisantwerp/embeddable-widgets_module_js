@@ -115,11 +115,7 @@ function define(definition) {
       componentDefinition.props.tag.value = () => tag;
       Object.values(componentDefinition.props).forEach((prop) => {
         if (prop.defaultValue) {
-          if (typeof prop.defaultValue === 'function') {
-            prop.default = prop.defaultValue;
-          } else {
-            prop.default = () => prop.defaultValue;
-          }
+          prop.default = () => prop.defaultValue;
         }
       });
     }

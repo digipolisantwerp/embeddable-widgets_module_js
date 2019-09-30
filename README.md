@@ -162,7 +162,7 @@ window.auiEmbeddableWidgets.renderUrl(
   - overrides: the overrides you passed down
   - component: a function to pass the properties to and instantiate
 
-  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times. However if you want to change the dimension on the samen widget, you will have to redifine one with a new tag.
+  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times. However if you want to change the dimension on the same widget, you will have to redefine one with a new tag.
 
 - `isDefined(tag: string): boolean`
 
