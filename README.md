@@ -310,6 +310,8 @@ NOTE: `window.scrollTo` is polyfilled from this library out.
   }
   ```
 
+  This can be any type of value. However if you pass a function, it will be called with `props` as the first argument. So if you want to have a function as `defaultValue`, make sure you wrap it.
+
 - **queryParam** `boolean | string`
 
   Should a prop be passed in the url (so it can influence the routing)?

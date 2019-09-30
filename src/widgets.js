@@ -39,7 +39,7 @@ const widgetDefaults = {
     scrollTo: {
       type: 'function',
       required: false,
-      defaultValue: (yPos, tag) => scrollTo(yPos, tag),
+      defaultValue: () => (yPos, tag) => scrollTo(yPos, tag),
     },
     tag: {
       type: 'string',
@@ -115,7 +115,11 @@ function define(definition) {
       componentDefinition.props.tag.value = () => tag;
       Object.values(componentDefinition.props).forEach((prop) => {
         if (prop.defaultValue) {
-          prop.default = () => prop.defaultValue;
+          if (typeof prop.defaultValue === 'function') {
+            prop.default = prop.defaultValue;
+          } else {
+            prop.default = () => prop.defaultValue;
+          }
         }
       });
     }
