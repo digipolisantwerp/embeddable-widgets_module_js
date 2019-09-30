@@ -33,10 +33,8 @@ describe('aui-embeddable-widgets', () => {
     expect(widgets.isDefined(tag)).to.equal(true);
     const elem = document.createElement('div');
     expect(elem.innerHTML).not.to.include('<iframe');
-    // override just the height from the definition (width will not be overridden)
-    const widget = widgets.render(tag, { dimensions: { height: '100%' } }, elem);
+    const widget = widgets.render(tag, { }, elem);
     expect(elem.innerHTML).to.include('<iframe');
-    expect(elem.innerHTML).to.match(/width: 500px;[\s]*height: 100%;/gm);
     expect(widget).to.be.an('object');
   });
 
