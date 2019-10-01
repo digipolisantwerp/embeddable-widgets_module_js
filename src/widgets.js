@@ -29,11 +29,13 @@ const widgetDefaults = {
   // show the ACPaaS UI spinner
   prerenderTemplate: defaultPrerenderTemplate,
   props: {
-    // pass ?_aui_api_version=1 in the widget's URL to allow breaking API changes
+    // pass ?_aui_api_version=2 in the widget's URL to allow breaking API changes
+    // 1 = zoid 6 (embeddable-widgets v1.x)
+    // 2 = zoid 9 (embeddable-widgets v2.x)
     _aui_api_version: {
       type: 'string',
       required: false,
-      defaultValue: '1',
+      defaultValue: '2',
       queryParam: true,
     },
     scrollTo: {
