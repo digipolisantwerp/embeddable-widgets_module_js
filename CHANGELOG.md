@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## Unreleased
+## Unreleased [2.X.X]
+- Upgrade to zoid@9
+- [BREAKING] zoid@9 does not let top level properties be overriden anymore. Follow up: https://github.com/krakenjs/zoid/issues/271
 
 ## [1.0.7] - 2019-06-04
 

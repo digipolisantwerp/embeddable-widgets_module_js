@@ -8,11 +8,17 @@ require('mocha-sinon');
 const expect = chai.expect;
 
 function randomTag(prefix) {
-  return prefix + Math.random().toString(36).substring(7);
+  return (
+    prefix
+    + Math.random()
+      .toString(36)
+      .substring(7)
+  );
 }
 
 describe('aui-embeddable-widgets', () => {
   it('defines and renders', () => {
+    // Test fails: https://github.com/krakenjs/zoid/issues/271
     const tag = randomTag('my-test-widget1');
     const definition = widgets.define({
       tag,
@@ -23,16 +29,12 @@ describe('aui-embeddable-widgets', () => {
         height: '500px',
       },
     });
-    expect(definition).to.be.an('object');
+    expect(definition.component).to.be.an('function');
     expect(widgets.isDefined(tag)).to.equal(true);
     const elem = document.createElement('div');
     expect(elem.innerHTML).not.to.include('<iframe');
-    // override just the height from the definition (width will not be overridden)
-    const widget = widgets.render(tag, { dimensions: { height: '100%' } }, elem);
+    const widget = widgets.render(tag, { }, elem);
     expect(elem.innerHTML).to.include('<iframe');
-    expect(elem.innerHTML).to.match(
-      /\.zoid-outlet \{[\s]*width: 500px;[\s]*height: 100%;/gm,
-    );
     expect(widget).to.be.an('object');
   });
 
@@ -48,7 +50,7 @@ describe('aui-embeddable-widgets', () => {
 
   it('transforms props defaultValue', () => {
     const tag = randomTag('my-test-widget4');
-    const definition = widgets.define({
+    const inputDefinition = {
       tag,
       url: 'http://example.com/',
       props: {
@@ -57,9 +59,10 @@ describe('aui-embeddable-widgets', () => {
           defaultValue: 'foo',
         },
       },
-    });
-    expect(definition.props.test.def).to.be.a('function');
-    expect(definition.props.test.def()).to.equal('foo');
+    };
+    const definition = widgets.define(inputDefinition);
+    expect(definition.componentDefinition.props.test.default).to.be.a('function');
+    expect(definition.componentDefinition.props.test.default()).to.equal('foo');
   });
 
   describe('load', () => {
@@ -111,9 +114,9 @@ describe('aui-embeddable-widgets', () => {
         .load('http://example.com/widget.json', null, true) // force loading
         .then((definition) => {
           expect(definition).to.be.an('object');
-          expect(definition.tag).to.equal(tag);
-          expect(definition.url).to.equal(fixture.url);
-          expect(definition.defaultLogLevel).to.equal(fixture.defaultLogLevel);
+          expect(definition.componentDefinition.tag).to.equal(tag);
+          expect(definition.componentDefinition.url).to.equal(fixture.url);
+          expect(definition.componentDefinition.defaultLogLevel).to.equal(fixture.defaultLogLevel);
           const elem = document.createElement('div');
           expect(elem.innerHTML).not.to.include('<iframe');
           const widget = widgets.render(tag, {}, elem);
@@ -138,7 +141,7 @@ describe('aui-embeddable-widgets', () => {
         expect(results.length).to.equal(2);
         expect(results[0]).to.equal(results[1]);
         expect(results[0]).to.be.an('object');
-        expect(results[0].tag).to.equal(tag);
+        expect(results[0].componentDefinition.tag).to.equal(tag);
         done();
       });
       // respond to xhr to kickstart .then handler
@@ -157,8 +160,8 @@ describe('aui-embeddable-widgets', () => {
         .load('http://example.com/definition/my-test-widget3.json', null, true) // force loading
         .then((definition) => {
           expect(definition).to.be.an('object');
-          expect(definition.tag).to.equal(tag);
-          expect(definition.url).to.equal('http://example.com/widget/');
+          expect(definition.componentDefinition.tag).to.equal(tag);
+          expect(definition.componentDefinition.url).to.equal('http://example.com/widget/');
           done();
         })
         .catch(err => done(err));

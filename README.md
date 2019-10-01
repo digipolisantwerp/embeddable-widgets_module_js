@@ -59,6 +59,9 @@ What is going on here:
   - `fooData` is an array which will be passed from container to widget
   - `onFoo` is an event handler which will be defined in the container and called by the widget
 
+If you want to render the same component multiple times on the same page but with different definition values.
+You will have to `define()` the component with different tags.
+
 See the [API](#API) section below for more details.
 
 > CORS headers need to be set on this JSON (e.g. `Access-Control-Allow-Origin: *`).
@@ -150,11 +153,16 @@ window.auiEmbeddableWidgets.renderUrl(
 
 ### `window.auiEmbeddableWidgets`
 
-- `define(definition: object): object`
+- `define(definition: object, ?overrides: object): object`
 
-  Defines a widget from the specified definition (same as the JSON described above) and returns a handle to widget for instantiating.
+  Defines a widget from the specified definition (same as the JSON described above) and returns a composed object with everything required to instantiate a component.
+  Object has: 
 
-  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times.
+  - options: the definition with processed default values
+  - overrides: the overrides you passed down
+  - component: a function to pass the properties to and instantiate
+
+  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times. However if you want to change the dimension on the same widget, you will have to redefine one with a new tag.
 
 - `isDefined(tag: string): boolean`
 
@@ -244,6 +252,28 @@ props: {
 }
 ```
 
+##### Default props
+
+###### scrollTo(yPos: Numer, tag: String)
+
+`scrollTo` is a property that is by default passed on to the component. When called from the component it is required to pass the yPosition and the tag.
+The tag can be found on the `props.tag` property. By default the widget framework will scroll the parent to the position passed.
+
+You can however overwrite the `scrollTo` property to handle the scroll yourself for example to compensate collapsable headers.
+
+```javascript
+const scrollTo = (elementOffset, tag) => {
+  const containerElement = document.querySelector(`.zoid-tag-${tag}`);
+  const newTopOffset = containerElement.offsetParent.offsetTop + elementOffset - headerHeight;
+  window.scrollTo({
+    top: newTopOffset,
+    behavior: 'smooth',
+  });
+}
+```
+
+NOTE: `window.scrollTo` is polyfilled from this library out.
+
 ##### Prop Options
 
 - **type** `string`
@@ -279,6 +309,8 @@ props: {
       defaultValue: ["one", "two"]
   }
   ```
+
+  This can be any type of value. However if you pass a function, it will be called with `props` as the first argument. So if you want to have a function as `defaultValue`, make sure you wrap it.
 
 - **queryParam** `boolean | string`
 
@@ -409,7 +441,7 @@ The wrapper is necessary to allow for a different developer experience which is 
 
 - [ ] Support max-width / max-height when autoResize is enabled
 - [ ] Auth token relaying (security topics in general)
-- [ ] Upgrade to latest zoid release
+- [x] Upgrade to latest zoid release
 
 ## License
 
