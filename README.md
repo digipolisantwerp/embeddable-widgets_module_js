@@ -8,12 +8,14 @@ Widgets can declare API's that are available in the container's page, even if co
 
 ## Using
 
+> If you are migrating from v1.x of this framework to v2.x be aware that there are breaking changes, see the [migration notes](#migrating) as well as the [changelog](CHANGELOG.md).
+
 ### Including
 
 A first step for both publishing and embedding is including the widgets library into the page.
 
 ```html
-<script src="https://cdn.antwerpen.be/aui_embeddable_widgets/1.0.5/aui-embeddable-widgets.min.js"></script>
+<script src="https://cdn.antwerpen.be/aui_embeddable_widgets/1.0.7/aui-embeddable-widgets.min.js"></script>
 ```
 
 If you don't want to load from CDN, you can also `npm install @acpaas-ui/embeddable-widgets` and you will find the library in the `node_modules/@acpaas-ui/embeddable-widgets/lib` folder.
@@ -148,6 +150,18 @@ window.auiEmbeddableWidgets.renderUrl(
   document.getElementById('my-container')
 );
 ```
+
+## Migrating
+
+If you're currently using v1.x of this library in an app or in a widget, care must be taken to upgrade properly. Both app and widget must be running the same major version of the embeddable widgets library.
+
+This library appends the _aui_api_version query parameter to the URL it loads into the iframe. Based on this the appropriate library version should be loaded inside of the widget's page. `v1.x` for `_aui_api_version=1`, and `v2.x` for `_aui_api_version=2`.
+
+To load multiple versions of this library inside the widget's app, you can use the npm feature to have [multiple versions of the same library](https://stackoverflow.com/a/56495651).
+
+A suggested upgrade strategy in case widget and app are separately hosted:
+1. Upgrade the widget to interpret `_aui_api_version` and load the appropriate library version.
+2. Upgrade the app to use the new major version of the library.
 
 ## API
 
@@ -441,7 +455,6 @@ The wrapper is necessary to allow for a different developer experience which is 
 
 - [ ] Support max-width / max-height when autoResize is enabled
 - [ ] Auth token relaying (security topics in general)
-- [x] Upgrade to latest zoid release
 
 ## License
 
