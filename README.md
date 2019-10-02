@@ -270,23 +270,26 @@ props: {
 
 ###### scrollTo(yPos: Numer, tag: String)
 
-`scrollTo` is a property that is by default passed on to the component. When called from the component it is required to pass the yPosition and the tag.
-The tag can be found on the `props.tag` property. By default the widget framework will scroll the parent to the position passed.
+Sometimes you need to scroll the page outside the iframe to match an element inside the iframe. In order to do this, from inside the widget the scrollTo prop can be called:
 
-You can however overwrite the `scrollTo` property to handle the scroll yourself for example to compensate collapsable headers.
+```javascript
+this.props.scrollTo(elementOffset, this.props.tag);
+```
+
+There is a default handler for `scrollTo` that is provided by the library. You can override it by passing your own implementation as `props.scrollTo`, for example, to compensate for header elements. This is the default implementation:
 
 ```javascript
 const scrollTo = (elementOffset, tag) => {
-  const containerElement = document.querySelector(`.zoid-tag-${tag}`);
-  const newTopOffset = containerElement.offsetParent.offsetTop + elementOffset - headerHeight;
+  const containerElement = document.querySelector(`[id^='zoid-${tag}-']`);
+  const newTopOffset = containerElement.offsetParent.offsetTop + elementOffset;
   window.scrollTo({
     top: newTopOffset,
     behavior: 'smooth',
   });
-}
+};
 ```
 
-NOTE: `window.scrollTo` is polyfilled from this library out.
+> NOTE: `window.scrollTo` is polyfilled by this library.
 
 ##### Prop Options
 
