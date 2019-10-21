@@ -15,7 +15,7 @@ Widgets can declare API's that are available in the container's page, even if co
 A first step for both publishing and embedding is including the widgets library into the page.
 
 ```html
-<script src="https://cdn.antwerpen.be/aui_embeddable_widgets/1.0.7/aui-embeddable-widgets.min.js"></script>
+<script src="https://cdn.antwerpen.be/aui_embeddable_widgets/2.0.0/aui-embeddable-widgets.min.js"></script>
 ```
 
 If you don't want to load from CDN, you can also `npm install @acpaas-ui/embeddable-widgets` and you will find the library in the `node_modules/@acpaas-ui/embeddable-widgets/lib` folder.
