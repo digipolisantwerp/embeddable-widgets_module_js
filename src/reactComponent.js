@@ -16,7 +16,7 @@ const reactComponent = (widgetUrl, deps, overrides) => class extends deps.React.
           Object.assign(widget.dimensions, this.props.dimensions);
         }
         // convert widget into react component
-        const component = widget.driver('react', deps);
+        const component = widget.component.driver('react', deps);
         // monkey-patch zoid's react component to make it respect className
         component.prototype.render = () => deps.React.createElement('div', {
           className: this.props.className,
