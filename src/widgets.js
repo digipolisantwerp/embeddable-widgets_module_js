@@ -4,10 +4,12 @@
 import { ZalgoPromise as Promise } from 'zalgo-promise';
 // polyfill URL because @babel/polyfill did not contain it yet
 import 'url-polyfill';
-import { create } from 'zoid/dist/zoid.frame';
+import * as zoid from 'zoid/dist/zoid.frameworks';
 import { base64decode } from 'belter';
 import deepMerge from 'deepmerge';
 import defaultPrerenderTemplate from './templates';
+
+const { create } = zoid;
 
 // registered widgets, indexed by tag
 const widgets = {};
