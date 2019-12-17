@@ -169,14 +169,14 @@ A suggested upgrade strategy in case widget and app are separately hosted:
 
 - `define(definition: object, ?overrides: object): object`
 
-  Defines a widget from the specified definition (same as the JSON described above) and returns a composed object with everything required to instantiate a component.
+  Defines a widget from the specified definition (same as the JSON described above) and definition overrides and returns a composed object with everything required to instantiate a component.
   Object has: 
 
   - options: the definition with processed default values
   - overrides: the overrides you passed down
   - component: a function to pass the properties to and instantiate
 
-  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times. However if you want to change the dimension on the same widget, you will have to redefine one with a new tag.
+  > Each widget has a unique tag. Each tag can only be defined once in the page, but can be rendered multiple times. However if you want to change the dimensions on the same widget, you will have to redefine one with a new tag.
 
 - `isDefined(tag: string): boolean`
 
@@ -184,7 +184,7 @@ A suggested upgrade strategy in case widget and app are separately hosted:
 
 - `load(url: string, ?overrides: object): Promise<object>`
 
-  Loads a widget definition from a URL, applies the optional overrides to it, then returns a handle to the widget for instantiating.
+  Loads a widget definition from a URL, applies the optional overrides to the loaded definition, then returns a handle to the widget for instantiating.
 
 - `render(tag: string|object, props: object, elem: HTMLElement): object`
 
@@ -193,8 +193,7 @@ A suggested upgrade strategy in case widget and app are separately hosted:
 
 - `renderUrl(url: string, props: object, elem: HTMLElement, ?overrides: object): Promise<object>`
 
-  Loads a widget definition from URL (if not yet loaded), applies the optional overrides to it,
-  then renders it to the specified element with the given props parameters.
+  Loads a widget definition from URL (if not yet loaded), applies the optional overrides to the loaded definition, then renders it to the specified element with the given props parameters.
   Returns a promise for the rendered instance.
 
 - `reactComponent(url: string, deps: object, ?overrides: object): object`
@@ -247,6 +246,8 @@ dimensions: {
     height: '90%'
 }
 ```
+
+> Dimensions are set at `define()` time, not at `render()` time. To override dimensions from the defaults they can be passed as a property of the `overrides` argument to `renderUrl`. However, this will be ignored on successive calls to `renderUrl()` for the same widget. To render the same widget multiple times with different dimensions it is suggested to use width and height 100% and put each widget in a container div that is appropriately sized.
 
 #### props `Object<string, Object>`
 
@@ -453,11 +454,6 @@ The wrapper is necessary to allow for a different developer experience which is 
 - defaultLogLevel = warn, whereas zoid has defaultLogLevel = info (which is spammy)
   - Can still be overridden by the widget's JSON
 - The framework itself is purely client-side, to allow hosting on a CDN.
-
-## Todo
-
-- [ ] Support max-width / max-height when autoResize is enabled
-- [ ] Auth token relaying (security topics in general)
 
 ## License
 
