@@ -4,15 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+- Fixed error in react when trying to pass dimensions as props
 
 ## [2.0.1] - 2019-12-16
 - Fixed React embed that was broken.
 
-
 ## [2.0.0] - 2019-10-01
 - Upgrade to `zoid@9`
 - Fix for error encoding special characters to send across iframe boundaries.
-- [BREAKING] `zoid@9` does not let top level properties be overriden anymore, see the readme for a workaround. Follow up: https://github.com/krakenjs/zoid/issues/271
+- [BREAKING] `zoid@9` does not let top level properties like `dimensions` be overriden anymore at render time, see the readme for a workaround. Follow up: https://github.com/digipolisantwerp/embeddable-widgets_module_js/issues/11
 - [BREAKING] Cannot be used in combination with the v1.x version of this library. See the migration notes in the readme.
 
 

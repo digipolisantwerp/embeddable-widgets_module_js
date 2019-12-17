@@ -11,10 +11,6 @@ const reactComponent = (widgetUrl, deps, overrides) => class extends deps.React.
   componentDidMount() {
     load(widgetUrl, overrides)
       .then((widget) => {
-        // copy dimensions so it will be picked up by zoid's render
-        if (this.props.dimensions) {
-          Object.assign(widget.dimensions, this.props.dimensions);
-        }
         // convert widget into react component
         const component = widget.component.driver('react', deps);
         // monkey-patch zoid's react component to make it respect className
