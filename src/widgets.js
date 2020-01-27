@@ -184,10 +184,23 @@ function render(tag, props, elem) {
     throw new Error(`Unable to render, widget "${tag}" is not loaded yet`);
   }
   const widget = typeof tag === 'string' ? widgets[tag] : tag;
+  const def = widget.componentDefinition;
 
   // pass overrides from parent to child
   props._aui_overrides = widget.overrides;
-  return widget.component(props).render(elem);
+  const cmp = widget.component(props);
+
+  // There is an off-by-one bug in the height calculations because zoid uses offsetHeight
+  // which sometimes is rounded down. Force the iframe to resize to 1 px taller to sidestep this.
+  if (def.autoResize && def.autoResize.height) {
+    cmp.event.on('zoid-resize', ({ height }) => {
+      if (height) {
+        cmp.resize({ height: height + 1 });
+      }
+    });
+  }
+
+  return cmp.render(elem);
 }
 
 /**
