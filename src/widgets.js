@@ -193,9 +193,16 @@ function render(tag, props, elem) {
   // There is an off-by-one bug in the height calculations because zoid uses offsetHeight
   // which sometimes is rounded down. Force the iframe to resize to 1 px taller to sidestep this.
   if (def.autoResize && def.autoResize.height) {
+    let lastHeight = null;
     cmp.event.on('zoid-resize', ({ height }) => {
-      if (height) {
-        cmp.resize({ height: height + 1 });
+      // if we're not just responding to our own height change
+      if (height && (lastHeight !== height)) {
+        const newHeight = height + 1;
+        lastHeight = newHeight;
+        // make sure we do this AFTER zoid updates the height
+        setTimeout(() => {
+          cmp.resize({ height: newHeight });
+        });
       }
     });
   }

@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [2.0.2] - 2020-01-27
+## [2.0.3] - 2020-01-27
 
 ### Fixed
 
@@ -57,8 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Initial release.
 
 
-[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.2...HEAD
-[2.0.2]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.1...v2.0.2
+[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.1...v2.0.3
 [2.0.1]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.7...v2.0.0
 [1.0.7]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.6...v1.0.7
