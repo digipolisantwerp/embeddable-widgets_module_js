@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 - Fixed error in react when trying to pass dimensions as props
+- Fixed off by one height issue with autoResize and scrolling:auto
 
 ## [2.0.1] - 2019-12-16
 - Fixed React embed that was broken.
