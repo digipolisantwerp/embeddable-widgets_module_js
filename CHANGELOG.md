@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed issue where widget keeps growing (chrome)
+
 ## [2.0.3] - 2020-01-27
 
 ### Fixed
