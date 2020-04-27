@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.4] - 2020-04-27
+
 ### Fixed
 
 - Fixed issue where widget keeps growing (chrome)
@@ -61,7 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Initial release.
 
 
-[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.3...HEAD
+[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.4...HEAD
+[2.0.4]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.1...v2.0.3
 [2.0.1]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v1.0.7...v2.0.0
