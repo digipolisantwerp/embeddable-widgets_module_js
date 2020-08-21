@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `render()` and `renderUrl()` now return the component instance instead of undefined
+
 ## [2.0.4] - 2020-04-27
 
 ### Fixed

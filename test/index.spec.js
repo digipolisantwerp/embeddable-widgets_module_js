@@ -119,9 +119,10 @@ describe('aui-embeddable-widgets', () => {
           expect(definition.componentDefinition.defaultLogLevel).to.equal(fixture.defaultLogLevel);
           const elem = document.createElement('div');
           expect(elem.innerHTML).not.to.include('<iframe');
-          const widget = widgets.render(tag, {}, elem);
-          expect(elem.innerHTML).to.include('<iframe');
-          expect(widget).to.be.an('object');
+          // must be a zoid component instance
+          const instance = widgets.render(tag, {}, elem);
+          expect(instance).to.be.an('object');
+          expect(instance.close).to.be.a('function');
           done();
         })
         .catch(err => done(err));
