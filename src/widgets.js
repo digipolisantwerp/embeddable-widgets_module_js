@@ -178,6 +178,7 @@ function load(url, overrides, force) {
  * @param {string|object} tag A handle to the widget component, or the widget's tag.
  * @param {object} props The props to render the widget with
  * @param {HTMLElement} elem The element to render the widget to
+ * @returns the zoid component instance
  */
 function render(tag, props, elem) {
   if (!typeof tag === 'function' || (typeof tag === 'string' && !widgets[tag])) {
@@ -188,14 +189,14 @@ function render(tag, props, elem) {
 
   // pass overrides from parent to child
   props._aui_overrides = widget.overrides;
-  const cmp = widget.component(props);
+  const instance = widget.component(props);
 
   // There is an off-by-one bug in the height calculations because zoid uses offsetHeight
   // which sometimes is rounded down. Force the iframe to resize to 1 px taller to sidestep this.
   if (def.autoResize && def.autoResize.height) {
     let lastHeight = null;
     let newHeight = null;
-    cmp.event.on('zoid-resize', ({ height }) => {
+    instance.event.on('zoid-resize', ({ height }) => {
       // if we're not just responding to our own height change
       if (height && (lastHeight !== height)) {
         newHeight = height + 1;
@@ -204,14 +205,15 @@ function render(tag, props, elem) {
         setTimeout(() => {
           if (lastHeight !== newHeight) {
             lastHeight = newHeight;
-            cmp.resize({ height: newHeight });
+            instance.resize({ height: newHeight });
           }
         }, 100);
       }
     });
   }
 
-  return cmp.render(elem);
+  instance.render(elem);
+  return instance;
 }
 
 /**
@@ -223,6 +225,7 @@ function render(tag, props, elem) {
  *                      Loading occurs only once, so these are applied once per page.
  * @param {boolean=} force Force loading even if already loaded.
  *                      Use only if you know what you're doing.
+ * @returns a promise for the rendered component instance
  */
 function renderUrl(url, props, elem, overrides, force) {
   return load(url, overrides, force).then(widget => render(widget, props, elem));
