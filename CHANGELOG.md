@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.6] - 2020-09-07
+
+### Fixed
+
+- Revert to zoid version 9.0.31 compatible with widgets app
+
 ## [2.0.5] - 2020-09-07
 
 ### Fixed

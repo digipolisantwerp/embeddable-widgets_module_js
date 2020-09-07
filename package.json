@@ -1,6 +1,6 @@
 {
   "name": "@acpaas-ui/embeddable-widgets",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Library for embedding parts of apps into other apps",
   "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
@@ -70,6 +70,6 @@
     "webpack-cli": "^3.3.2",
     "yargs": "^15.4.1",
     "zalgo-promise": "^1.0.40",
-    "zoid": "^9.0.29"
+    "zoid": "9.0.31"
   }
 }
