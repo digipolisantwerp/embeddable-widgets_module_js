@@ -455,6 +455,18 @@ The wrapper is necessary to allow for a different developer experience which is 
   - Can still be overridden by the widget's JSON
 - The framework itself is purely client-side, to allow hosting on a CDN.
 
+## Contributing
+
+Pull requests are always welcome, however keep the following things in mind:
+
+- New features (both breaking and non-breaking) should always be discussed with the [repo's owner](#support). If possible, please open an issue first to discuss what you would like to change.
+- Fork this repo and issue your fix or new feature via a pull request.
+- Please make sure to update tests as appropriate. Also check possible linting errors and update the CHANGELOG if applicable.
+
+## Support
+
+Joeri Sebrechts (<joeri.sebrechts@digipolis.be>)
+
 ## License
 
 [MIT](./LICENSE.md)
