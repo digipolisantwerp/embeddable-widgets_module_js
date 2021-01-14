@@ -1,6 +1,6 @@
 /**
  * Please do not remove this file as it is needed by
- * Travis to publish the library to our Antwerp CDN.
+ * GitHub actions to publish the library to our Antwerp CDN.
  */
 
 const fs = require('fs');
