@@ -1,1 +1,0 @@
--r @babel/register -r jsdom-global/register -r test/helper --colors

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.7] - 2021-03-09
+
+- Don't polyfill smoothscroll during SSR
+
 ## [2.0.6] - 2020-09-07
 
 ### Fixed
@@ -75,7 +79,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Initial release.
 
 
-[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.5...HEAD
+[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.7...HEAD
+[2.0.7]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.6...v2.0.7
+[2.0.6]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.1...v2.0.3
