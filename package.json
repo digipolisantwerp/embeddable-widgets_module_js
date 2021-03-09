@@ -71,7 +71,6 @@
     "nyc": "^14.1.1",
     "sinon": "^7.3.2",
     "smoothscroll-polyfill": "^0.4.4",
-    "uglifyjs-webpack-plugin": "^1.1.2",
     "url-polyfill": "^1.1.5",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
