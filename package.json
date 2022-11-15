@@ -10,7 +10,8 @@
     "test": "mocha --exit ./test/*.spec.js",
     "test:watch": "mocha -w ./test/*.spec.js",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js",
-    "aws": "node publish.js"
+    "aws": "node publish.js",
+    "postinstall": "patch-package"
   },
   "author": "Digipolis",
   "license": "MIT",
@@ -69,6 +70,7 @@
     "mocha-sinon": "^2.1.0",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
+    "patch-package": "^6.5.0",
     "sinon": "^7.3.2",
     "smoothscroll-polyfill": "^0.4.4",
     "url-polyfill": "^1.1.5",
