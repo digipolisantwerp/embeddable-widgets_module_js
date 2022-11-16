@@ -66,7 +66,7 @@
     "jsdom": "11.11.0",
     "jsdom-global": "3.0.2",
     "jsx-pragmatic": "^2.0.7",
-    "mocha": "^8.3.1",
+    "mocha": "^10.1.0",
     "mocha-sinon": "^2.1.0",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
