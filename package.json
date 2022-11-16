@@ -63,7 +63,7 @@
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.17.3",
     "express": "^4.17.1",
-    "jsdom": "11.11.0",
+    "jsdom": "16.5.0",
     "jsdom-global": "3.0.2",
     "jsx-pragmatic": "^2.0.7",
     "mocha": "^8.3.1",
