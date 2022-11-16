@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.8] - 2022-11-16
+
 - fix shadow DOM compatibility (patch zoid 9.0.31 with fix from zoid 9.0.40)
 
 ## [2.0.7] - 2021-03-09
@@ -81,7 +83,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Initial release.
 
 
-[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.7...HEAD
+[Unreleased]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.8...HEAD
+[2.0.8]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/digipolisantwerp/embeddable-widgets_module_js/compare/v2.0.4...v2.0.5
