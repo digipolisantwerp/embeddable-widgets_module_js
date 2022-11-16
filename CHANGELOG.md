@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- fix shadow DOM compatibility (patch zoid 9.0.31 with fix from zoid 9.0.40)
+
 ## [2.0.7] - 2021-03-09
 
 - Don't polyfill smoothscroll during SSR

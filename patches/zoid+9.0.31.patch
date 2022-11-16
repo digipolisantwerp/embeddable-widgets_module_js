@@ -1,0 +1,20 @@
+diff --git a/node_modules/zoid/dist/zoid.frameworks.js b/node_modules/zoid/dist/zoid.frameworks.js
+index b58350b..a80a77b 100644
+--- a/node_modules/zoid/dist/zoid.frameworks.js
++++ b/node_modules/zoid/dist/zoid.frameworks.js
+@@ -451,7 +451,14 @@
+                     if (!frame.contentWindow) return !0;
+                     if (!frame.parentNode) return !0;
+                     var doc = frame.ownerDocument;
+-                    return !(!doc || !doc.documentElement || doc.documentElement.contains(frame));
++                    // patch to fix shadow dom compatibility in zoid 9.0.31, taken from zoid 9.0.40+
++                    // return !(!doc || !doc.documentElement || doc.documentElement.contains(frame));
++                    if (doc && doc.documentElement && !doc.documentElement.contains(frame)) {
++                        var parent = frame;
++                        for (;parent.parentNode && parent.parentNode !== parent; ) parent = parent.parentNode;
++                        if (!parent.host || !doc.documentElement.contains(parent.host)) return !0;
++                    }
++                    return !1;
+                 }(frame)) return !0;
+             }
+             return !1;
