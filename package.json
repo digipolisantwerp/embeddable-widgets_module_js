@@ -5,8 +5,8 @@
   "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
     "start": "nodemon index.js",
-    "build": "webpack --env dev && webpack --env build && npm run test",
-    "dev": "webpack --progress --colors --watch --env dev",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --env dev && webpack --env build && npm run test",
+    "dev": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --progress --colors --watch --env dev",
     "test": "mocha --exit ./test/*.spec.js",
     "test:watch": "mocha -w ./test/*.spec.js",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js",
