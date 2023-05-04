@@ -11,7 +11,8 @@
     "test:watch": "mocha -w ./test/*.spec.js",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js",
     "aws": "node publish.js",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "preinstall": "npx npm-force-resolutions"
   },
   "author": "Digipolis",
   "license": "MIT",
@@ -63,12 +64,12 @@
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.17.3",
     "express": "^4.17.1",
-    "jsdom": "11.11.0",
+    "jsdom": "^22.0.0",
     "jsdom-global": "3.0.2",
     "jsx-pragmatic": "^2.0.7",
-    "mocha": "^8.3.1",
+    "mocha": "^10.2.0",
     "mocha-sinon": "^2.1.0",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.22",
     "nyc": "^14.1.1",
     "patch-package": "^6.5.0",
     "sinon": "^7.3.2",
@@ -79,5 +80,8 @@
     "yargs": "^15.4.1",
     "zalgo-promise": "^1.0.40",
     "zoid": "9.0.31"
+  },
+  "resolutions": {
+    "glob-parent": "^6.0.1"
   }
 }
