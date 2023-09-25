@@ -28,7 +28,7 @@ const scrollTo = (elementOffset, tag) => {
 // defaults applied to widget definitions
 const widgetDefaults = {
   defaultLogLevel: 'warn',
-  // show the ACPaaS UI spinner
+  // show the AUI spinner
   prerenderTemplate: defaultPrerenderTemplate,
   props: {
     // pass ?_aui_api_version=2 in the widget's URL to allow breaking API changes
