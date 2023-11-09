@@ -11,7 +11,7 @@
     "test:watch": "mocha -w ./test/*.spec.js",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha ./test/*.spec.js",
     "aws": "node publish.js",
-    "postinstall": "patch-package"
+    "postinstall": "npx patch-package"
   },
   "author": "Digipolis",
   "license": "MIT",
