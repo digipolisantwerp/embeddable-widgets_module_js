@@ -21,7 +21,7 @@ This component is part of the [AUI platform](https://antwerp-ui.digipolis.be).
 ### Code layout
 
 - `./src` contains the library source
-- `./lib` contains the build output
+- `./dist` contains the build output
 
 ### Building and Testing
 
