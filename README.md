@@ -18,7 +18,7 @@ A first step for both publishing and embedding is including the widgets library 
 <script src="https://cdn.antwerpen.be/embeddable-widgets_module_js/2.0.9/aui-embeddable-widgets.min.js"></script>
 ```
 
-If you don't want to load from CDN, you can also `npm install @acpaas-ui/embeddable-widgets` and you will find the library in the `node_modules/@acpaas-ui/embeddable-widgets/dist` folder.
+If you don't want to load from CDN, you can also `npm install @acpaas-ui/embeddable-widgets` and you will find the library in the `node_modules/@acpaas-ui/embeddable-widgets/lib` folder.
 
 ### Publishing
 

@@ -6,16 +6,6 @@
 const fs = require('fs');
 const path = require('path');
 
-run();
-
-async function run() {
-  try {
-    await copyFolderRecursiveSync('dist');
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 function copyFolderRecursiveSync(source, target) {
   const nodePackageFile = JSON.parse(fs.readFileSync(`${__dirname}/package.json`));
   const version = nodePackageFile.version;
@@ -29,10 +19,20 @@ function copyFolderRecursiveSync(source, target) {
     }
   }
   files = fs.readdirSync(source);
-  files.forEach(function (file) {
+  files.forEach((file) => {
     const sourceFile = path.join(source, file);
     const targetFile = path.join(target, version, file);
     const data = fs.readFileSync(sourceFile, 'utf-8');
     fs.writeFileSync(targetFile, data);
   });
 }
+
+async function run() {
+  try {
+    await copyFolderRecursiveSync('lib', 'dist');
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+run();

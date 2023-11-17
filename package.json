@@ -2,7 +2,7 @@
   "name": "@acpaas-ui/embeddable-widgets",
   "version": "2.0.9",
   "description": "Library for embedding parts of apps into other apps",
-  "main": "dist/aui-embeddable-widgets.js",
+  "main": "lib/aui-embeddable-widgets.js",
   "scripts": {
     "start": "nodemon index.js",
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --env dev && cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --env build && npm run test",

@@ -5,7 +5,7 @@ const path = require('path');
 const env = require('yargs').argv.env; // use --env with webpack 2
 const pkg = require('./package.json');
 
-const libraryName = "auiEmbeddableWidgets";
+const libraryName = 'auiEmbeddableWidgets';
 
 let outputFile;
 let mode;
@@ -23,7 +23,7 @@ const config = {
   entry: `${__dirname  }/src/index.js`,
   devtool: 'source-map',
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}/lib`,
     filename: outputFile,
     library: libraryName,
     libraryTarget: 'umd',
