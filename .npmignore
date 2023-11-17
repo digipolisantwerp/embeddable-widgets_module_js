@@ -1,5 +1,9 @@
-.nyc_output
-coverage
-node_modules
-src
-test
+/coverage/
+/node_modules/
+/src/
+/test/
+/patches/
+/.*
+/*.js
+/CHANGELOG.md
+/CONTRIBUTING.md
