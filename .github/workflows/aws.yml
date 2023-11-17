@@ -17,9 +17,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build library
-        run: npm run build
-      - name: Prepare for publish
-        run: npm run aws
+        run: npm run build && npm run aws
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v3
