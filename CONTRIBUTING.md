@@ -4,7 +4,7 @@ First off, thanks for taking the time to contribute! :+1:
 
 ## I just have a question
 
-You can launch a quick question on the [#acpaas-ui slack channel](https://digantcafe.slack.com/messages/CDDLYJU65). If you're not yet a member of our DigAnt Café slack community, you can easily [join here](https://digantcafe-slack.digipolis.be/).
+You can launch a quick question on the [#antwerp-ui slack channel](https://digantcafe.slack.com/messages/CDDLYJU65). If you're not yet a member of our DigAnt Café slack community, you can easily [join here](https://digantcafe-slack.digipolis.be/).
 
 For something that requires longer discussion it may be better to book an issue.
 
@@ -14,7 +14,7 @@ Please book a GitHub issue.
 
 ## What should I know to get started?
 
-This component is part of the [ACPaaS UI platform](https://acpaas-ui.digipolis.be).
+This component is part of the [AUI platform](https://antwerp-ui.digipolis.be).
 
 ## How can I contribute code?
 
@@ -59,7 +59,7 @@ If possible, do provide meaningful and clean commit messages. A [good commit mes
 
 ### Publishing
 
-> Only the ACPaaS UI team publishes new releases. [Contact us](https://acpaas-ui.digipolis.be/contact) if you need a new release published.
+> Only the AUI team publishes new releases. [Contact us](https://antwerp-ui.digipolis.be/contact) if you need a new release published.
 
 ### Breaking API changes
 
