@@ -10,7 +10,7 @@ run();
 
 async function run() {
   try {
-    await copyFolderRecursiveSync('lib', 'dist');
+    await copyFolderRecursiveSync('dist');
   } catch (e) {
     console.log(e);
   }
